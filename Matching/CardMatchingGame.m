@@ -92,7 +92,7 @@ static const int COST_TO_CHOOSE = 1;
             matchTest = [card match:@[otherCard]];
             if(matchTest){
                 matchScore+=matchTest;
-                NSLog(@"Testing %@ %@ %d",card.contents,otherCard.contents,matchTest);
+                NSLog(@"Testing3 %@ %@ %d",card.contents,otherCard.contents,matchTest);
                 statusString = [statusString stringByAppendingFormat:@"%@,%@ Match for %d",card.contents,otherCard.contents,matchTest];
                 self.result=statusString;
                 
