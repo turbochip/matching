@@ -21,35 +21,36 @@
 @implementation CardGameViewController
 
 - (void)resetGame{
-    _game=nil;
-    _modeSwitch.enabled=YES;
-    _game=[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-                                      usingDeck:[self createDeck]];
+    self.game=nil;
+    self.modeSwitch.enabled=YES;
+    
+    self.game=[[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
     
 }
 
 - (IBAction)changeModeSwitch:(UISwitch *)sender {
     [self resetGame];
     if(sender.on)
-        _game.MATCH_COUNT=3;
+        self.game.MATCH_COUNT=3;
     else
-        _game.MATCH_COUNT=2;
+        self.game.MATCH_COUNT=2;
     [self updateUI];
 }
 
 - (IBAction)touchResetButton:(UIButton *)sender {
     [self resetGame];
-    _modeSwitch.on = NO;
-    _game.MATCH_COUNT=2;
+    self.modeSwitch.on = NO;
+    self.game.MATCH_COUNT=2;
     [self updateUI];
 }
+
 - (CardMatchingGame *)game
 {
     if (!_game){
         
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                                       usingDeck:[self createDeck]];
-    _modeSwitch.on=NO;
+    self.modeSwitch.on=NO;
     _game.MATCH_COUNT=2;
     }
 
@@ -64,7 +65,7 @@
 - (IBAction)touchCardButton:(UIButton *)sender {
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
-    _modeSwitch.enabled=NO;
+    self.modeSwitch.enabled=NO;
     [self updateUI];
 }
 
