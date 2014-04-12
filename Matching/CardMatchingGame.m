@@ -73,8 +73,8 @@ static const int COST_TO_CHOOSE = 1;
             // so add it to the list of chosenCards.
             [self.chosenCards addObject:card];
             card.chosen=YES;
-            if(self.chosenCards.count==_MATCH_COUNT) {
-                self.score=self.calcScore;
+            if(self.chosenCards.count==self.MATCH_COUNT) {
+                self.score+=self.calcScore;
                 self.chosenCards=nil;
             }
         }
@@ -93,16 +93,12 @@ static const int COST_TO_CHOOSE = 1;
             if(matchTest){
                 matchScore+=matchTest;
                 NSLog(@"Testing2 %@ %@ %d",card.contents,otherCard.contents,matchTest);
-                statusString = [statusString stringByAppendingFormat:@"%@,%@ Match for %d",card.contents,otherCard.contents,matchTest];
-                self.result=statusString;
-                
             }
         }
     }
     matchTest=matchScore;
-//    for (int i=0;i<_MATCH_COUNT;i++) {
     for(Card *otherCard in self.chosenCards) {
-//        Card *otherCard=self.chosenCards[i];
+        [statusString stringByAppendingFormat:@"%@,",otherCard.contents];
         if(matchTest) {
             matchScore+=matchScore *MATCH_BONUS;
             otherCard.matched=YES;
@@ -112,8 +108,20 @@ static const int COST_TO_CHOOSE = 1;
             otherCard.chosen=NO;
         }
     }
+    if(matchScore>0) {
+        statusString=[statusString stringByAppendingFormat:@" Matches for %d Points",matchScore];
+    }else {
+        statusString=[statusString stringByAppendingFormat:@" Does not match for %d Points",matchScore];
+    }
+    self.result=statusString;
     self.chosenCards=nil;
     return matchScore;
+}
+
+- (NSInteger) score
+{
+    if(!_score)_score=0;
+    return(_score);
 }
 
 - (NSInteger) MATCH_COUNT
