@@ -105,28 +105,23 @@ static const int COST_TO_CHOOSE = 1;
             }
         }
     }
+    
     for(Card *otherCard in self.chosenCards) {
         [statusString stringByAppendingFormat:@"%@,",otherCard.contents];
-      //  NSLog(@"matchTest3=%d",matchTest);
         if(matchTest) {
-        //    NSLog(@"matchTest4=%d, matchScore=%d",matchTest, matchScore);
-           // matchScore=matchTest *MATCH_BONUS;
-          //  NSLog(@"matchTest5=%d, matchScore=%d",matchTest, matchScore);
             otherCard.matched=YES;
         } else {
-            //NSLog(@"matchTest6=%d, matchScore=%d",matchTest, matchScore);
-           // matchScore -= MISMATCH_PENALTY;
-           // NSLog(@"matchTest7=%d, matchScore=%d",matchTest, matchScore);
             otherCard.matched = NO;
             otherCard.chosen=NO;
         }
     }
-//    NSLog(@"matchTest=%d, matchScore=%d",matchTest, matchScore);
+
     if(matchTest>0) {
         statusString=[statusString stringByAppendingFormat:@" Matches for %d Points",matchTest];
     }else {
         statusString=[statusString stringByAppendingFormat:@" Does not match for %d Points",matchTest];
     }
+    
     self.result=statusString;
     self.chosenCards=nil;
     return matchScore;
