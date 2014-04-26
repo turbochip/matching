@@ -13,39 +13,30 @@
 
 -(NSString *)contents
 {
-    NSArray *rankStrings = [gSetPlayingCard rankStrings];
-    return [rankStrings[self.Rank] stringByAppendingString:self.Suit];
+    return [self.cardShape stringByAppendingString:
+            [self.validFills[self.cardFill] stringByAppendingString:
+             [self.cardColor.description stringByAppendingFormat: @"%d",self.cardQuantity]]];
 }
 
-@synthesize Suit = _suit;
-
-+(NSArray *)validSuits
++(NSArray *)validShapes
 {
-    return @[@"⬜️",@"⚪️",@"♣️"];
+    return @[@"○",@"☐",@"△"];
 }
 
--(void)setSuit:(NSString *)suit
++(NSArray *)validFills
 {
-    if([[gSetPlayingCard validSuits] containsObject:suit]) {
-        _suit = suit;
-    }
+    return @[@"Empty",@"Solid",@"Slash"];
 }
 
--(NSString *)suit
++(NSArray *)validColors
 {
-    return _suit ? _suit : @"?";
+    return @[[UIColor redColor], [UIColor blueColor], [UIColor greenColor]];
 }
-
-+(NSArray *)rankStrings
-{
-    return @[@"?",@"A",@"2",@"3"];
-}
-
 - (void)setup
 {
-    self.backgroundColor = nil;
-    self.opaque = NO;
-    self.contentMode = UIViewContentModeRedraw;
+//    self.backgroundColor = nil;
+//    self.opaque = NO;
+//    self.contentMode = UIViewContentModeRedraw;
 }
 
 - (void)awakeFromNib
@@ -56,7 +47,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+ //   self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
         [self setup];
@@ -68,25 +59,25 @@
 - (void) setCardColor:(UIColor *)cardColor
 {
     _cardColor=cardColor;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 - (void) setCardQuantity:(NSInteger)cardQuantity
 {
     _cardQuantity=cardQuantity;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
-- (void)setCardShape:(NSInteger)cardShape
+- (void)setCardShape:(NSString *)cardShape
 {
     _cardShape=cardShape;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 - (void)setCardFill:(NSInteger)cardFill
 {
     _cardFill=cardFill;
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 #pragma mark - Drawing
@@ -94,9 +85,9 @@
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
 #define CORNER_RADIUS 12.0
 
-- (CGFloat)cornerScaleFactor { return self.bounds.size.height / CORNER_FONT_STANDARD_HEIGHT; }
-- (CGFloat)cornerRadius { return CORNER_RADIUS * [self cornerScaleFactor]; }
-- (CGFloat)cornerOffset { return [self cornerRadius] / 3.0; }
+//- (CGFloat)cornerScaleFactor { return self.bounds.size.height / CORNER_FONT_STANDARD_HEIGHT; }
+//- (CGFloat)cornerRadius { return CORNER_RADIUS * [self cornerScaleFactor]; }
+//- (CGFloat)cornerOffset { return [self cornerRadius] / 3.0; }
 
 
 // Only override drawRect: if you perform custom drawing.
@@ -106,10 +97,10 @@
     [self drawCard: self.cardShape withColor: self.cardColor withFill: self.cardFill forQuantity: self.cardQuantity At: self.cardLocation];
 }
 
-- (void)drawCard: (NSInteger) shape withColor: (UIColor *) cardColor withFill: (NSInteger) fill forQuantity: (NSInteger) quantity At: (CGPoint) location
+- (void)drawCard: (NSString *) shape withColor: (UIColor *) cardColor withFill: (NSInteger) fill forQuantity: (NSInteger) quantity At: (CGPoint) location
 {
     // Drawing code
-    self.roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
+//    self.roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
     
     [self.roundedRect addClip];
     if((!cardColor)||(!quantity)||(!fill)){
@@ -117,21 +108,17 @@
     }
     else {
         [[UIColor whiteColor] setFill];
-        UIRectFill(self.bounds);
+//        UIRectFill(self.bounds);
         
         [[UIColor blackColor] setStroke];
         [self.roundedRect stroke];
         
-        switch(shape) {
-            case 1:
+        if([shape isEqualToString:@"☐"]) {
                 [self drawSetDiamond:cardColor withFill:fill forQuantity:quantity];
-                break;
-            case 2:
+        } else if ([shape isEqualToString:@"○"]) {
                 [self drawSetCircle:cardColor withFill:fill forQuantity:quantity];
-                break;
-            case 3:
+        } else if([shape isEqualToString:@"△"]) {
                 [self drawSetSquiggle:cardColor withFill:fill forQuantity:quantity];
-                break;
         }
     }
     

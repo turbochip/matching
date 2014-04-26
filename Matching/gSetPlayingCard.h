@@ -8,23 +8,30 @@
 
 #import "Card.h"
 
-@interface gSetPlayingCard : UIView
-
+//@interface gSetPlayingCard : UIView
+@interface gSetPlayingCard : Card
+@property (nonatomic,strong) NSArray *validShapes;
+@property (nonatomic,strong) NSArray *validColors;
+@property (nonatomic,strong) NSArray *validFills;
 @property (nonatomic,strong) NSString * Suit;
 @property (nonatomic) NSUInteger Rank;
 @property (nonatomic,strong) NSString * Fill;
 @property (nonatomic,strong) NSString * Color;
 
 /*@interface setGameCardViewController : UIView */
-@property (nonatomic,strong) UIColor *cardColor;
+@property (nonatomic) UIColor * cardColor;
 @property (nonatomic) NSInteger cardQuantity;
-@property (nonatomic) NSInteger cardShape;
+@property (nonatomic) NSString * cardShape;
 @property (nonatomic) NSInteger cardFill;
 @property (nonatomic) CGPoint cardLocation;
 
 @property (nonatomic, strong) UIBezierPath * roundedRect;
 
-- (void)drawCard: (NSInteger) shape
++(NSArray *)validShapes;
++(NSArray *)validColors;
++(NSArray *)validFills;
+
+- (void)drawCard: (NSString *) shape
        withColor: (UIColor *) cardColor
         withFill: (NSInteger) fill
      forQuantity: (NSInteger) quantity
