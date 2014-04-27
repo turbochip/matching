@@ -93,7 +93,8 @@
 
 - (NSString *)titleForCard:(Card *)card
 {
-    NSLog(@"%@,%@",card.contents);
+    NSString * title;
+    NSLog(@"%@",card.contents);
     return card.isChosen ? card.contents : @"";
 }
 

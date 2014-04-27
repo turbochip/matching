@@ -13,8 +13,6 @@
 @property (nonatomic,strong) NSArray *validShapes;
 @property (nonatomic,strong) NSArray *validColors;
 @property (nonatomic,strong) NSArray *validFills;
-@property (nonatomic,strong) NSString * Suit;
-@property (nonatomic) NSUInteger Rank;
 @property (nonatomic,strong) NSString * Fill;
 @property (nonatomic,strong) NSString * Color;
 
