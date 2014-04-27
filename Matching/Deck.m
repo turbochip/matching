@@ -26,6 +26,7 @@
         [self.cards insertObject:card atIndex:0];
     }
     else {
+        NSLog(@"Adding Card %@",card.contents);
         [self.cards addObject:card];
     }
 }

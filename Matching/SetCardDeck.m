@@ -17,16 +17,21 @@
     
     if(self){
         for (NSString *shape in [gSetPlayingCard validShapes]) {
+            NSLog(@"%@",shape);
             for (NSInteger quantity = 1; quantity <= 3; quantity++) {
+                NSLog(@"%d",quantity);
                 for (UIColor * color in gSetPlayingCard.validColors) {
+                    NSLog(@"%@",color.description );
                     for(NSInteger fill=1; fill<=3; fill++) {
+                        NSLog(@"%d",fill);
                         gSetPlayingCard *card = [[gSetPlayingCard alloc] init];
                         card.cardShape=shape;
                         card.cardQuantity = quantity;
                         card.cardColor=color;
                         card.cardFill=fill;
-                        [self addCard:card];
                         NSLog(@"%@",[card contents]);
+
+                        [self addCard:card];
                     }
                 }
             }

@@ -13,9 +13,30 @@
 
 -(NSString *)contents
 {
+    NSArray *validFills = [gSetPlayingCard validFills];
+/* USE FOR DEBUGGING ONLY
+    NSLog(@"%@",self.cardShape);
+    NSLog(@"%@",validFills[self.cardFill]);
+    NSLog(@"%@",[self cardColorString: self.cardColor]);
+    NSLog(@"%d",self.cardQuantity);
+*/
     return [self.cardShape stringByAppendingString:
-            [self.validFills[self.cardFill] stringByAppendingString:
-             [self.cardColor.description stringByAppendingFormat: @"%d",self.cardQuantity]]];
+            [validFills[self.cardFill] stringByAppendingString:
+             [[self cardColorString:self.cardColor ] stringByAppendingFormat: @"%d",self.cardQuantity]]];
+}
+
+-(NSString *) cardColorString: (UIColor *)currentColor
+{
+    CGFloat redC=0.0;
+    CGFloat greenC=0.0;
+    CGFloat blueC=0.0;
+    CGFloat alphaC=0.0;
+    if([currentColor getRed:&redC green:&greenC blue:&blueC alpha:&alphaC]){
+        return(redC ? @"Red" : greenC ? @"Green" : @"Blue");
+    } else {
+        return nil;
+    }
+    
 }
 
 +(NSArray *)validShapes
@@ -25,7 +46,7 @@
 
 +(NSArray *)validFills
 {
-    return @[@"Empty",@"Solid",@"Slash"];
+    return @[@"?",@"Empty",@"Solid",@"Slash"];
 }
 
 +(NSArray *)validColors
@@ -124,7 +145,7 @@
     
 }
 
-#define DefaultFontSize 120.0
+#define DefaultFontSize 12.0
 
 - (void)drawSetCircle: (UIColor *) cardColor
              withFill: (NSInteger) fill

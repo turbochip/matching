@@ -27,9 +27,12 @@
 
 @property (nonatomic, strong) UIBezierPath * roundedRect;
 
+
 +(NSArray *)validShapes;
 +(NSArray *)validColors;
 +(NSArray *)validFills;
+
+- (NSString *)cardColorString:(UIColor *)currentColor;
 
 - (void)drawCard: (NSString *) shape
        withColor: (UIColor *) cardColor
