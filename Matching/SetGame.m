@@ -55,25 +55,24 @@
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
-//static const int MATCH_COUNT=2;
+static const int MATCH_COUNT=3;
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
     gSetCard *card = [self cardAtIndex:index];  // card is the card we just clicked on
     NSLog(@"SetGame chooseCardAtIndex = %@",card.contents);
     if (!card.isMatched) {
-        self.score-=COST_TO_CHOOSE;
         if (card.isChosen) {
-            if(self.chosenCards.count==1){
+            if(self.chosenCards.count<MATCH_COUNT){
                 [self.chosenCards removeObject:card];
-                card.chosen=NO;  // if card is not already matched and is the only card chosen, reset it to chosen no
+                card.chosen=NO;  // if card is not already matched 
             }
         } else {  //this is a valid card to test it's not already matched
             //and we aren't resetting choosen status
             // so add it to the list of chosenCards.
             [self.chosenCards addObject:card];
             card.chosen=YES;
-            if(self.chosenCards.count==self.MATCH_COUNT) {
+            if(self.chosenCards.count==MATCH_COUNT) {
                 self.score+=self.calcScore;
                 self.chosenCards=nil;
             }
@@ -83,44 +82,26 @@ static const int COST_TO_CHOOSE = 1;
 
 - (NSInteger)calcScore
 {
-    int matchScore=0, matchTest=0;
-    NSString *statusString=@" ";
-    for (int j=0;j<self.MATCH_COUNT-1;j++) {
-        gSetCard *card = self.chosenCards[j];
-        for (int i=j+1;i<self.MATCH_COUNT;i++) {
-            gSetCard *otherCard=self.chosenCards[i];
-            matchTest += [card match:@[otherCard]];
-            if(matchTest){
-                NSLog(@"Testing %@ %@ %d",card.contents,otherCard.contents,matchTest);
-                matchScore+=matchTest * MATCH_BONUS;
-                NSLog(@"matchTest2-2=%d matchScore=%d",matchTest,matchScore);
-            } else {
-                NSLog(@"matchTest2-3=%d matchScore=%d",matchTest,matchScore);
-                matchScore-=MISMATCH_PENALTY;
-                NSLog(@"matchTest2-4=%d matchScore=%d",matchTest,matchScore);
-            }
+    int matchTest=0;
+    
+//    gSetCard *otherCard=self.chosenCards;
+    matchTest += [self.chosenCards[0] match:self.chosenCards];
+    if(matchTest){
+        NSLog(@"matchTest Success");
+        for (gSetCard *card in self.chosenCards)
+        {
+            card.chosen=NO;
+            card.matched=YES;
+        }
+    } else {
+        NSLog(@"matchTest Failure");
+        for(gSetCard *card in self.chosenCards)
+        {
+            card.chosen=NO;
+            card.matched=NO;
         }
     }
-    
-    for(gSetCard *otherCard in self.chosenCards) {
-        [statusString stringByAppendingFormat:@"%@,",otherCard.contents];
-        if(matchTest) {
-            otherCard.matched=YES;
-        } else {
-            otherCard.matched = NO;
-            otherCard.chosen=NO;
-        }
-    }
-    
-    if(matchTest>0) {
-        statusString=[statusString stringByAppendingFormat:@" Matches for %d Points",matchTest];
-    }else {
-        statusString=[statusString stringByAppendingFormat:@" Does not match for %d Points",matchTest];
-    }
-    
-    self.result=statusString;
-    self.chosenCards=nil;
-    return matchScore;
+    return matchTest;
 }
 
 - (NSInteger) score

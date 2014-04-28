@@ -20,41 +20,6 @@
              [[self cardColorString:self.cardColor ] stringByAppendingFormat: @"%d",self.cardQuantity]]];
 }
 
-/*-(int) match:(NSArray *)otherCards
-{
-    int score = 0;
-    BOOL colorOk=NO;
-    BOOL shapeOk=NO;
-    BOOL fillOk=NO;
-    BOOL qtyOk=NO;
-    
-    if (([[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
-        ([[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
-    if (([[otherCards[0] cardShape] isEqual: [otherCards[1] cardShape]]) &&
-        ([[otherCards[0] cardShape] isEqual: [otherCards[2] cardShape]])) shapeOk=YES;
-    if (([otherCards[0] cardFill] == [otherCards[1] cardFill]) &&
-        ([otherCards[0] cardFill] == [otherCards[2] cardFill])) fillOk=YES;
-    if (([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity]) &&
-        ([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) qtyOk=YES;
-    
-    if ((![[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
-        (![[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]]) &&
-        (![[otherCards[1] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
-    if ((![[otherCards[0] cardShape] isEqual: [otherCards[1] cardShape]]) &&
-        (![[otherCards[0] cardShape] isEqual: [otherCards[2] cardShape]]) &&
-        (![[otherCards[1] cardShape] isEqual: [otherCards[2] cardShape]])) shapeOk=YES;
-    if ((!([otherCards[0] cardFill] == [otherCards[1] cardFill])) &&
-        (!([otherCards[0] cardFill] == [otherCards[2] cardFill])) &&
-        (!([otherCards[1] cardFill] == [otherCards[2] cardFill]))) fillOk=YES;
-    if ((!([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity])) &&
-        (!([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) &&
-        (!([otherCards[1] cardQuantity] == [otherCards[2] cardQuantity]))) qtyOk=YES;
-    
-    if(colorOk && shapeOk && fillOk && qtyOk) score=1;
-    
-    return score;
-}
-*/
 
 -(NSString *) cardColorString: (UIColor *)currentColor
 {
@@ -89,6 +54,7 @@
 //    self.backgroundColor = nil;
 //    self.opaque = NO;
 //    self.contentMode = UIViewContentModeRedraw;
+    NSLog(@"In Setup");
 }
 
 - (void)awakeFromNib
@@ -176,7 +142,7 @@
     
 }
 
-#define DefaultFontSize 12.0
+#define DefaultFontSize 18.0
 
 - (void)drawSetCircle: (UIColor *) cardColor
              withFill: (NSInteger) fill

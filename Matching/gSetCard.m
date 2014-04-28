@@ -18,6 +18,10 @@
     BOOL fillOk=NO;
     BOOL qtyOk=NO;
     
+    NSLog(@"Comparing ");
+    for(int i=0;i<3;i++)
+        NSLog(@"%@",[otherCards[i] contents] );
+    
     if (([[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
         ([[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
     if (([[otherCards[0] cardShape] isEqual: [otherCards[1] cardShape]]) &&

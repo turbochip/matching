@@ -15,7 +15,7 @@
 @interface gSetViewController ()
 @property (strong, nonatomic) SetGame *game;
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *SetCardButtons;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSMutableArray *SetCardButtons;
 
 @property (weak, nonatomic) IBOutlet UILabel *cardsLeftInDeckLabel;
 
@@ -78,6 +78,16 @@
     [self updateUI];
 }
 - (IBAction)Deal3MoreButton:(id)sender {
+    for(gSetCard *Bcard in self.SetCardButtons){
+        int matchedButtonIndex=[self.SetCardButtons indexOfObject:Bcard];
+        NSLog(@"%d",[Bcard isMatched]);
+        if ([Bcard isMatched]) {
+            Bcard.matched=NO;
+            Bcard.chosen=NO;
+            [self.SetCardButtons removeObjectAtIndex:matchedButtonIndex];
+            [self.SetCardButtons addObject:self.mainDeck.drawRandomCard];
+        }
+    }
 }
 - (IBAction)touchCardButton:(id)sender {
     int chosenButtonIndex = [self.SetCardButtons indexOfObject:sender];
@@ -90,17 +100,28 @@
     for (UIButton *cardButton in self.SetCardButtons) {
         int cardButtonIndex = [self.SetCardButtons indexOfObject:cardButton];
         gSetCard *card = [self.game cardAtIndex:cardButtonIndex];
- 
-        [cardButton setAttributedTitle:[self attributedTitleForCard:card] forState:UIControlStateNormal];
+        cardButton.backgroundColor=[UIColor grayColor];
         [cardButton setBackgroundImage: [self backgroundImageForCard:card] forState:UIControlStateNormal];
+        if(card.isMatched){
+            cardButton.enabled=NO;
+            [cardButton setAttributedTitle:nil forState:UIControlStateNormal];
+        } else {
+            cardButton.enabled=YES;
+            [cardButton setAttributedTitle:[self attributedTitleForCard:card] forState:UIControlStateNormal];
+        }
         cardButton.enabled = !card.isMatched;
         self.cardsLeftInDeckLabel.text=[NSString stringWithFormat:@"%d Cards Left in Deck",[self.mainDeck.cards count]];
-//        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",self.game.score];
-//        self.resultLabel.text = [NSString stringWithFormat:@"Result: %@",self.game.result];
+        if(card.isChosen){
+            cardButton.selected=YES;
+            [cardButton setBackgroundImage:Nil forState:UIControlStateNormal];
+        }
+        else
+            cardButton.selected=NO;
     }
 }
 
-#define DefaultFontSize 8
+#define DefaultFontSize 14
+
 
 - (NSAttributedString *)attributedTitleForCard:(gSetCard *)card
 {
@@ -114,6 +135,8 @@
     NSMutableAttributedString *atext=[[NSMutableAttributedString alloc] initWithString:tempstring];
     int stringLength=[atext length];
     float fontSize=DefaultFontSize;
+    if(card.isChosen)
+        NSLog(@"card is chosen");
     
     UIFont *font=[UIFont fontWithName:@"Helvetica-Bold" size:fontSize];
     [atext addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, stringLength)];
@@ -121,7 +144,7 @@
     
     switch(card.cardFill) {
         case 1:
-            [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor purpleColor] range:NSMakeRange(0,stringLength)];
+            [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor yellowColor] range:NSMakeRange(0,stringLength)];
             break;
         case 2:
             [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,stringLength)];
