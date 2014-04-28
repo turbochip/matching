@@ -1,14 +1,15 @@
 //
-//  setCard.m
+//  gSetCard.m
 //  Matching
 //
-//  Created by Cox, Chip on 4/26/14.
+//  Created by Cox, Chip on 4/27/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
-#import "setCard.h"
+#import "gSetCard.h"
 
-@implementation setCard
+@implementation gSetCard
+
 -(int) match:(NSArray *)otherCards
 {
     int score = 0;
@@ -25,7 +26,7 @@
         ([otherCards[0] cardFill] == [otherCards[2] cardFill])) fillOk=YES;
     if (([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity]) &&
         ([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) qtyOk=YES;
-
+    
     if ((![[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
         (![[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]]) &&
         (![[otherCards[1] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
@@ -38,10 +39,11 @@
     if ((!([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity])) &&
         (!([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) &&
         (!([otherCards[1] cardQuantity] == [otherCards[2] cardQuantity]))) qtyOk=YES;
-
+    
     if(colorOk && shapeOk && fillOk && qtyOk) score=1;
     
     return score;
 }
+
 
 @end

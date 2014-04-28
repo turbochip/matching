@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
-#import "Card.h"
+#import "gSetCard.h"
 
 //@interface gSetPlayingCard : UIView
-@interface gSetPlayingCard : Card
+@interface gSetPlayingCard : gSetCard
 @property (nonatomic,strong) NSArray *validShapes;
 @property (nonatomic,strong) NSArray *validColors;
 @property (nonatomic,strong) NSArray *validFills;
@@ -17,11 +17,11 @@
 @property (nonatomic,strong) NSString * Color;
 
 /*@interface setGameCardViewController : UIView */
-@property (nonatomic) UIColor * cardColor;
-@property (nonatomic) NSInteger cardQuantity;
-@property (nonatomic) NSString * cardShape;
-@property (nonatomic) NSInteger cardFill;
-@property (nonatomic) CGPoint cardLocation;
+//@property (nonatomic) UIColor * cardColor;
+//@property (nonatomic) NSInteger cardQuantity;
+//@property (nonatomic) NSString * cardShape;
+//@property (nonatomic) NSInteger cardFill;
+//@property (nonatomic) CGPoint cardLocation;
 
 @property (nonatomic, strong) UIBezierPath * roundedRect;
 

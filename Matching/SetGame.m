@@ -27,13 +27,14 @@
     return _cards;
 }
 
+/* this selects the cards for the board */
 - (instancetype)initWithCardCount:(NSUInteger)count
-                        usingDeck:(Deck *)deck
+                        usingDeck:(gSetDeck *)deck
 {
     self=[super init];
     if(self) {
         for (int i=0; i<count; i++) {
-            Card *card = [deck drawRandomCard];
+            gSetCard *card = [deck drawRandomCard];
             if (card) {
                 [self.cards addObject:card];
             } else {
@@ -46,7 +47,7 @@
     return self;
 }
 
-- (Card *)cardAtIndex:(NSUInteger) index
+- (gSetCard *)cardAtIndex:(NSUInteger) index
 {
     return (index<[self.cards count]) ? self.cards[index] : nil;
 }
@@ -58,8 +59,8 @@ static const int COST_TO_CHOOSE = 1;
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
-    Card *card = [self cardAtIndex:index];  // card is the card we just clicked on
-    NSLog(@"%@",card.contents);
+    gSetCard *card = [self cardAtIndex:index];  // card is the card we just clicked on
+    NSLog(@"SetGame chooseCardAtIndex = %@",card.contents);
     if (!card.isMatched) {
         self.score-=COST_TO_CHOOSE;
         if (card.isChosen) {
@@ -73,9 +74,7 @@ static const int COST_TO_CHOOSE = 1;
             [self.chosenCards addObject:card];
             card.chosen=YES;
             if(self.chosenCards.count==self.MATCH_COUNT) {
-                NSLog(@"score1=%d",self.score);
                 self.score+=self.calcScore;
-                NSLog(@"score2=%d",self.score);
                 self.chosenCards=nil;
             }
         }
@@ -86,14 +85,11 @@ static const int COST_TO_CHOOSE = 1;
 {
     int matchScore=0, matchTest=0;
     NSString *statusString=@" ";
-    NSLog(@"MATCH_COUNT=%d",self.MATCH_COUNT);
     for (int j=0;j<self.MATCH_COUNT-1;j++) {
-        Card *card = self.chosenCards[j];
+        gSetCard *card = self.chosenCards[j];
         for (int i=j+1;i<self.MATCH_COUNT;i++) {
-            Card *otherCard=self.chosenCards[i];
-            NSLog(@"matchTest1=%d",matchTest);
+            gSetCard *otherCard=self.chosenCards[i];
             matchTest += [card match:@[otherCard]];
-            NSLog(@"matchTest2-1=%d,j=%d,i=%d",matchTest,j,i);
             if(matchTest){
                 NSLog(@"Testing %@ %@ %d",card.contents,otherCard.contents,matchTest);
                 matchScore+=matchTest * MATCH_BONUS;
@@ -106,7 +102,7 @@ static const int COST_TO_CHOOSE = 1;
         }
     }
     
-    for(Card *otherCard in self.chosenCards) {
+    for(gSetCard *otherCard in self.chosenCards) {
         [statusString stringByAppendingFormat:@"%@,",otherCard.contents];
         if(matchTest) {
             otherCard.matched=YES;
@@ -138,7 +134,6 @@ static const int COST_TO_CHOOSE = 1;
     if(!_MATCH_COUNT) _MATCH_COUNT=2;
     return _MATCH_COUNT;
 }
-
 
 - (NSMutableArray *) chosenCards
 {

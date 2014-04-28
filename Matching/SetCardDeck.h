@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
-#import "Deck.h"
+#import "gSetDeck.h"
 
-@interface SetCardDeck : Deck
+@interface SetCardDeck : gSetDeck
 
 @end

@@ -9,15 +9,18 @@
 #import "gSetViewController.h"
 #import "SetGame.h"
 #import "SetCardDeck.h"
+#import "gSetPlayingCard.h"
+#import "gSetDeck.h"
 
 @interface gSetViewController ()
 @property (strong, nonatomic) SetGame *game;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *SetCardButtons;
 
-@property (weak, nonatomic) IBOutlet UILabel *CardsInDeckButton;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *cardsLeftInDeckLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (nonatomic,strong) gSetDeck *mainDeck;
 @end
 
 @implementation gSetViewController
@@ -35,6 +38,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.game=[[SetGame alloc] initWithCardCount:[self.SetCardButtons count] usingDeck:[self createDeck]];
+    [self updateUI];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,9 +52,9 @@
 - (SetGame *)game
 {
     if (!_game){
-        NSLog(@"set card buttons=%d",[(NSArray *)self.SetCardButtons count]);
+
         _game = [[SetGame alloc] initWithCardCount:[self.SetCardButtons count]
-                                                  usingDeck:[self createDeck]];
+                                         usingDeck:[self createDeck]];
     }
         return _game;
 }
@@ -61,9 +67,10 @@
     
 }
 
-- (Deck *) createDeck
+- (gSetDeck *) createDeck
 {
-    return [[SetCardDeck alloc] init];
+    self.mainDeck=[[SetCardDeck alloc] init];
+    return self.mainDeck;
 }
 
 - (IBAction)RestartButton:(id)sender {
@@ -82,25 +89,57 @@
 {
     for (UIButton *cardButton in self.SetCardButtons) {
         int cardButtonIndex = [self.SetCardButtons indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setTitle: [self titleForCard:card] forState:UIControlStateNormal];
+        gSetCard *card = [self.game cardAtIndex:cardButtonIndex];
+ 
+        [cardButton setAttributedTitle:[self attributedTitleForCard:card] forState:UIControlStateNormal];
         [cardButton setBackgroundImage: [self backgroundImageForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
+        self.cardsLeftInDeckLabel.text=[NSString stringWithFormat:@"%d Cards Left in Deck",[self.mainDeck.cards count]];
 //        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",self.game.score];
 //        self.resultLabel.text = [NSString stringWithFormat:@"Result: %@",self.game.result];
     }
 }
 
-- (NSString *)titleForCard:(Card *)card
+#define DefaultFontSize 8
+
+- (NSAttributedString *)attributedTitleForCard:(gSetCard *)card
 {
-    NSString * title;
-    NSLog(@"%@",card.contents);
-    return card.isChosen ? card.contents : @"";
+    NSLog(@"AttibutedTitleForCard = %@",card.contents);
+
+    NSString * tempstring=@"";
+    for(int i=0;i< card.cardQuantity;i++){
+//        tempstring=[tempstring stringByAppendingString:card.cardShape]
+        tempstring=[tempstring stringByAppendingFormat:@"%@ ",card.cardShape];
+    }
+    NSMutableAttributedString *atext=[[NSMutableAttributedString alloc] initWithString:tempstring];
+    int stringLength=[atext length];
+    float fontSize=DefaultFontSize;
+    
+    UIFont *font=[UIFont fontWithName:@"Helvetica-Bold" size:fontSize];
+    [atext addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, stringLength)];
+    [atext addAttribute:NSForegroundColorAttributeName value:card.cardColor range:NSMakeRange(0,stringLength)];
+    
+    switch(card.cardFill) {
+        case 1:
+            [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor purpleColor] range:NSMakeRange(0,stringLength)];
+            break;
+        case 2:
+            [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,stringLength)];
+            break;
+        case 3:
+            [atext addAttribute:NSBackgroundColorAttributeName value:[UIColor colorWithWhite:(CGFloat)0 alpha:(CGFloat).5] range:NSMakeRange(0,stringLength)];
+            
+            break;
+    }
+    
+    return atext;
 }
 
-- (UIImage *)backgroundImageForCard:(Card *) card
+
+
+- (UIImage *)backgroundImageForCard:(gSetCard *) card
 {
-    return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardBack"];
+    return [UIImage imageNamed:card.isMatched ? @"cardBack" : @"cardfront"];
 }
 
 

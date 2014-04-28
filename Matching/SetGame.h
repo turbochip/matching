@@ -7,16 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Deck.h"
-#import "Card.h"
+#import "gSetDeck.h"
+#import "gSetCard.h"
 @interface SetGame : NSObject
 
 //designated initializer  (whatever that means)
 - (instancetype) initWithCardCount:(NSUInteger)count
-                         usingDeck:(Deck *)deck;
+                         usingDeck:(gSetDeck *)deck;
 
+//- (int) getCardsRemainingInDeck;
 - (void)chooseCardAtIndex:(NSUInteger)index;
-- (Card *)cardAtIndex:(NSUInteger)index;
+- (gSetCard *)cardAtIndex:(NSUInteger)index;
 - (NSInteger)calcScore;
 @property (nonatomic,readonly) NSInteger score;
 @property (nonatomic,strong) NSString *result;

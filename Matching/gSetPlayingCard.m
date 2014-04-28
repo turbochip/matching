@@ -14,16 +14,47 @@
 -(NSString *)contents
 {
     NSArray *validFills = [gSetPlayingCard validFills];
-/* USE FOR DEBUGGING ONLY
-    NSLog(@"%@",self.cardShape);
-    NSLog(@"%@",validFills[self.cardFill]);
-    NSLog(@"%@",[self cardColorString: self.cardColor]);
-    NSLog(@"%d",self.cardQuantity);
-*/
+
     return [self.cardShape stringByAppendingString:
             [validFills[self.cardFill] stringByAppendingString:
              [[self cardColorString:self.cardColor ] stringByAppendingFormat: @"%d",self.cardQuantity]]];
 }
+
+/*-(int) match:(NSArray *)otherCards
+{
+    int score = 0;
+    BOOL colorOk=NO;
+    BOOL shapeOk=NO;
+    BOOL fillOk=NO;
+    BOOL qtyOk=NO;
+    
+    if (([[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
+        ([[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
+    if (([[otherCards[0] cardShape] isEqual: [otherCards[1] cardShape]]) &&
+        ([[otherCards[0] cardShape] isEqual: [otherCards[2] cardShape]])) shapeOk=YES;
+    if (([otherCards[0] cardFill] == [otherCards[1] cardFill]) &&
+        ([otherCards[0] cardFill] == [otherCards[2] cardFill])) fillOk=YES;
+    if (([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity]) &&
+        ([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) qtyOk=YES;
+    
+    if ((![[otherCards[0] cardColor] isEqual: [otherCards[1] cardColor]]) &&
+        (![[otherCards[0] cardColor] isEqual: [otherCards[2] cardColor]]) &&
+        (![[otherCards[1] cardColor] isEqual: [otherCards[2] cardColor]])) colorOk=YES;
+    if ((![[otherCards[0] cardShape] isEqual: [otherCards[1] cardShape]]) &&
+        (![[otherCards[0] cardShape] isEqual: [otherCards[2] cardShape]]) &&
+        (![[otherCards[1] cardShape] isEqual: [otherCards[2] cardShape]])) shapeOk=YES;
+    if ((!([otherCards[0] cardFill] == [otherCards[1] cardFill])) &&
+        (!([otherCards[0] cardFill] == [otherCards[2] cardFill])) &&
+        (!([otherCards[1] cardFill] == [otherCards[2] cardFill]))) fillOk=YES;
+    if ((!([otherCards[0] cardQuantity] == [otherCards[1] cardQuantity])) &&
+        (!([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) &&
+        (!([otherCards[1] cardQuantity] == [otherCards[2] cardQuantity]))) qtyOk=YES;
+    
+    if(colorOk && shapeOk && fillOk && qtyOk) score=1;
+    
+    return score;
+}
+*/
 
 -(NSString *) cardColorString: (UIColor *)currentColor
 {
@@ -77,7 +108,7 @@
 }
 
 #pragma mark - Setters and Getters
-- (void) setCardColor:(UIColor *)cardColor
+/*- (void) setCardColor:(UIColor *)cardColor
 {
     _cardColor=cardColor;
 //    [self setNeedsDisplay];
@@ -100,7 +131,7 @@
     _cardFill=cardFill;
 //    [self setNeedsDisplay];
 }
-
+*/
 #pragma mark - Drawing
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
@@ -187,7 +218,11 @@
               withFill: (NSInteger)fill
            forQuantity: (NSInteger)quantity
 {
-    NSMutableAttributedString *atext=[[NSMutableAttributedString alloc] initWithString:@"☐"];
+    NSString * tempstring=@"☐";
+    for(int i=0;i<quantity-1;i++)
+        [tempstring stringByAppendingString:tempstring];
+        
+    NSMutableAttributedString *atext=[[NSMutableAttributedString alloc] initWithString:tempstring];
     int stringLength=[atext length];
     float fontSize=DefaultFontSize/quantity;
     
@@ -195,10 +230,10 @@
     [atext addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, stringLength)];
     [atext addAttribute:NSForegroundColorAttributeName value:cardColor range:NSMakeRange(0,stringLength)];
     
-    CGSize atextsize=atext.size;
-    CGFloat leftbuffer=atextsize.width;
-    CGFloat characterSpacing=leftbuffer/2;
-    CGPoint drawPoint=CGPointMake(leftbuffer,(self.roundedRect.bounds.size.height/2)-(atextsize.height/2));
+//    CGSize atextsize=atext.size;
+//    CGFloat leftbuffer=atextsize.width;
+//    CGFloat characterSpacing=leftbuffer/2;
+//    CGPoint drawPoint=CGPointMake(leftbuffer,(self.roundedRect.bounds.size.height/2)-(atextsize.height/2));
     
     switch(fill) {
         case 1:
@@ -213,10 +248,10 @@
             break;
     }
     
-    for(int i=1;i<=quantity;i++){
-        [atext drawAtPoint:drawPoint];
-        drawPoint.x+=characterSpacing+atextsize.width;
-    }
+//    for(int i=1;i<=quantity;i++){
+//        [atext drawAtPoint:drawPoint];
+//        drawPoint.x+=characterSpacing+atextsize.width;
+//    }
 }
 
 - (void)drawSetSquiggle: (UIColor *) cardColor
