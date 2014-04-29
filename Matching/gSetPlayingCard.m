@@ -255,13 +255,5 @@
     }
 }
 
-
-#pragma mark - generic functions
-/*
- static inline double radians (double degrees)
- {
- return degrees * M_PI/180;
- }
- */
 @end
 

@@ -11,16 +11,19 @@
 #import "SetCardDeck.h"
 #import "gSetPlayingCard.h"
 #import "gSetDeck.h"
+#import "setHistoryViewController.h"
 
 @interface gSetViewController ()
 @property (strong, nonatomic) SetGame *game;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSMutableArray *SetCardButtons;
+@property (strong, nonatomic) IBOutlet UITextView *quickHistoryText;
 
 @property (weak, nonatomic) IBOutlet UILabel *cardsLeftInDeckLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
+//@property (strong, nonatomic) NSMutableAttributedString *history;
 @end
 
 @implementation gSetViewController
@@ -42,6 +45,14 @@
     [self updateUI];
 
 }
+
+/*- (NSMutableAttributedString *)history
+{
+    if(!_history){
+        _history=[[NSMutableAttributedString alloc] init];
+    }
+    return _history;
+}*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -70,18 +81,35 @@
 - (gSetDeck *) createDeck
 {
     self.mainDeck=[[SetCardDeck alloc] init];
+    
     return self.mainDeck;
 }
 
 - (IBAction)RestartButton:(id)sender {
+    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:@"Restarting Game\n"];
+    NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.attributedText];
+    
+    [tempstr appendAttributedString:temp1];
+    
     [self resetGame];
     [self updateUI];
+
+    self.quickHistoryText.attributedText = tempstr;
 }
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"HistorySegue"]){
+        setHistoryViewController *vhistory = segue.destinationViewController;
+        vhistory.history =self.quickHistoryText.attributedText;
+    }
+}
+
 - (IBAction)Deal3MoreButton:(id)sender {
     for(gSetCard *Bcard in self.SetCardButtons){
         int matchedButtonIndex=[self.SetCardButtons indexOfObject:Bcard];
-        NSLog(@"%d",[Bcard isMatched]);
-        if ([Bcard isMatched]) {
+        NSLog(@"%d",[Bcard.self isMatched]);
+        if ([Bcard.self isMatched]) {
             Bcard.matched=NO;
             Bcard.chosen=NO;
             [self.SetCardButtons removeObjectAtIndex:matchedButtonIndex];
