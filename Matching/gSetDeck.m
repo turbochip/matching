@@ -7,6 +7,8 @@
 //
 
 #import "gSetDeck.h"
+#import "CardGameGlobal.h"
+
 @interface gSetDeck()
 //@property (strong,nonatomic) NSMutableArray *cards; //of PlayingCard
 @end

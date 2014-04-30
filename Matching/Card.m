@@ -7,11 +7,14 @@
 //
 
 #import "Card.h"
+#import "CardGameGlobal.h"
 
 @interface Card()
 @end
 
 @implementation Card
+
+
 
 -(int) match:(NSArray *)otherCards
 {

@@ -7,8 +7,12 @@
 //
 
 #import "CardGameGlobal.h"
+@interface CardGameGlobal()
+
+@end
 
 @implementation CardGameGlobal
+
 #pragma mark - generic functions
 
 static inline double radians (double degrees)
@@ -24,11 +28,13 @@ static inline double radians (double degrees)
     return Temp;
 }
 
-- (NSMutableAttributedString *) NSStrCatMutableAttributed: (NSAttributedString *) str1 stringByAppendingAttributedString: (NSAttributedString *) str2
-{    
-    NSMutableAttributedString *Temp=[[NSMutableAttributedString alloc] initWithAttributedString:str1];
-    [Temp appendAttributedString:str2];
+- (void)logHistory: (NSMutableAttributedString *) historyMessage
+{
+    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:historyMessage.mutableString];
+    NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.mutableCopy];
     
-    return Temp;
+    [tempstr appendAttributedString:temp1];
+    self.quickHistoryText = tempstr;
+    
 }
 @end

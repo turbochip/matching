@@ -7,8 +7,20 @@
 //
 
 #import "gSetCard.h"
+#import "CardGameGlobal.h"
+@interface gSetCard ()
 
+@property (nonatomic,strong) NSMutableAttributedString * quickHistoryText;
+@property (nonatomic,strong) CardGameGlobal * CGG;
+@end
 @implementation gSetCard
+
+-(instancetype) init
+{
+    self=[super init];
+    self.CGG=[[CardGameGlobal alloc] init];
+    return self;
+}
 
 -(int) match:(NSArray *)otherCards
 {
@@ -18,6 +30,7 @@
     BOOL fillOk=NO;
     BOOL qtyOk=NO;
     
+    [self.CGG logHistory:[[NSMutableAttributedString alloc] initWithString:@"Comparing/n"]];
     NSLog(@"Comparing ");
     for(int i=0;i<3;i++)
         NSLog(@"%@",[otherCards[i] contents] );

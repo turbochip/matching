@@ -7,6 +7,7 @@
 //
 
 #import "SetGame.h"
+#import "CardGameGlobal.h"
 
 @interface SetGame()  //This area which we added is for locl private properties
 @property (nonatomic, readwrite) NSInteger score;  // Here in thes re-definition of the

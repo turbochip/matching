@@ -8,6 +8,7 @@
 
 #import "SetCardDeck.h"
 #import "gSetPlayingCard.h"
+#import "CardGameGlobal.h"
 
 @implementation SetCardDeck
 

@@ -205,13 +205,6 @@
                                     <action selector="touchCardButton:" destination="f4p-5Z-jrx" eventType="touchUpInside" id="DqW-0b-rOu"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dbe-25-YVF">
-                                <rect key="frame" x="233" y="344" width="85" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -224,7 +217,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cardsLeftInDeckLabel" destination="eXp-nR-jO4" id="QFw-xN-JzN"/>
-                        <outlet property="quickHistoryText" destination="dbe-25-YVF" id="TAJ-y3-OW4"/>
                         <outletCollection property="SetCardButtons" destination="8ta-66-bm0" collectionClass="NSMutableArray" id="ZOR-kO-qRW"/>
                         <outletCollection property="SetCardButtons" destination="1r1-Q0-087" collectionClass="NSMutableArray" id="Wa5-vU-HY7"/>
                         <outletCollection property="SetCardButtons" destination="TAB-eC-0A9" collectionClass="NSMutableArray" id="fuL-5p-Tf5"/>

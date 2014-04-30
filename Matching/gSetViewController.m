@@ -12,17 +12,18 @@
 #import "gSetPlayingCard.h"
 #import "gSetDeck.h"
 #import "setHistoryViewController.h"
+#import "CardGameGlobal.h"
 
 @interface gSetViewController ()
 @property (strong, nonatomic) SetGame *game;
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSMutableArray *SetCardButtons;
-@property (strong, nonatomic) IBOutlet UITextView *quickHistoryText;
 
 @property (weak, nonatomic) IBOutlet UILabel *cardsLeftInDeckLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
+@property (nonatomic,strong) CardGameGlobal *CGG;
 //@property (strong, nonatomic) NSMutableAttributedString *history;
 @end
 
@@ -41,18 +42,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    CardGameGlobal * CGG=[[CardGameGlobal alloc] init];
     self.game=[[SetGame alloc] initWithCardCount:[self.SetCardButtons count] usingDeck:[self createDeck]];
     [self updateUI];
 
 }
 
-/*- (NSMutableAttributedString *)history
+/*
+ - (NSMutableAttributedString *)quickHistoryText
 {
-    if(!_history){
-        _history=[[NSMutableAttributedString alloc] init];
+    if(!_quickHistoryText){
+        _quickHistoryText=[[NSMutableAttributedString alloc] init];
     }
-    return _history;
-}*/
+    return _quickHistoryText;
+}
+*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -84,24 +88,29 @@
     
     return self.mainDeck;
 }
-
-- (IBAction)RestartButton:(id)sender {
-    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:@"Restarting Game\n"];
-    NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.attributedText];
+/*
+- (void)logHistory: (NSMutableAttributedString *) historyMessage
+{
+    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:historyMessage.mutableString];
+    NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.mutableCopy];
     
     [tempstr appendAttributedString:temp1];
-    
+    self.quickHistoryText = tempstr;
+  
+}
+*/
+- (IBAction)RestartButton:(id)sender {
     [self resetGame];
     [self updateUI];
-
-    self.quickHistoryText.attributedText = tempstr;
+    [self.CGG logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting/n"]];
 }
+
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"HistorySegue"]){
         setHistoryViewController *vhistory = segue.destinationViewController;
-        vhistory.history =self.quickHistoryText.attributedText;
+        vhistory.history =self.CGG.quickHistoryText.mutableCopy;
     }
 }
 

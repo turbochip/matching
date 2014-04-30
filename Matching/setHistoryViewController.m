@@ -7,6 +7,7 @@
 //
 
 #import "setHistoryViewController.h"
+#import "CardGameGlobal.h"
 
 @interface setHistoryViewController ()
 

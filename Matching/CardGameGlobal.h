@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface CardGameGlobal : NSObject
-- (NSString *) NSStrCat: (NSString *) str1 stringByAppendingString:(NSString*) str2;
+
+@property (nonatomic,strong) NSMutableAttributedString * quickHistoryText;
+
+- (void)logHistory: (NSMutableAttributedString *) historyMessage;
+
 @end

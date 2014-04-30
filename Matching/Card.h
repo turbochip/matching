@@ -14,6 +14,7 @@
 
 @property (nonatomic, getter=isChosen) BOOL chosen;
 @property (nonatomic, getter=isMatched) BOOL matched;
+@property (nonatomic, strong) NSMutableAttributedString * quickHistoryText;
 
 - (int)match:(NSArray *) otherCards;
 

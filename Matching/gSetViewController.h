@@ -10,4 +10,6 @@
 
 @interface gSetViewController : UIViewController
 
+//- (void)logHistory: (NSMutableAttributedString *) historyMessage;
+
 @end
