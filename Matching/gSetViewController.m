@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
+@property (nonatomic) CardGameGlobal *sharedGlobal;
 @end
 
 @implementation gSetViewController
@@ -43,6 +44,7 @@
 //    CardGameGlobal * CGG=[[CardGameGlobal alloc] init];
     self.game=[[SetGame alloc] initWithCardCount:[self.SetCardButtons count] usingDeck:[self createDeck]];
     [self updateUI];
+//    CardGameGlobal *sharedGlobal=[CardGameGlobal sharedGlobal];
 
 }
 
@@ -80,8 +82,8 @@
 - (IBAction)RestartButton:(id)sender {
     [self resetGame];
     [self updateUI];
-    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
-    [sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting\n"]];
+//    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
+    [self.sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting\n"]];
 }
 
 
@@ -127,14 +129,17 @@
             [cardButton setAttributedTitle:[self attributedTitleForCard:card] forState:UIControlStateNormal];
         }
         cardButton.enabled = !card.isMatched;
-        self.cardsLeftInDeckLabel.text=[NSString stringWithFormat:@"%d Cards Left in Deck",[self.mainDeck.cards count]];
         if(card.isChosen){
             cardButton.selected=YES;
             [cardButton setBackgroundImage:Nil forState:UIControlStateNormal];
+            self.historyLabel.attributedText =[self attributedTitleForCard: card];
+            
         }
         else
             cardButton.selected=NO;
+
     }
+    self.cardsLeftInDeckLabel.text=[NSString stringWithFormat:@"%d Cards Left in Deck",[self.mainDeck.cards count]];
 }
 
 #define DefaultFontSize 14
@@ -146,7 +151,6 @@
 
     NSString * tempstring=@"";
     for(int i=0;i< card.cardQuantity;i++){
-//        tempstring=[tempstring stringByAppendingString:card.cardShape]
         tempstring=[tempstring stringByAppendingFormat:@"%@ ",card.cardShape];
     }
     NSMutableAttributedString *atext=[[NSMutableAttributedString alloc] initWithString:tempstring];
@@ -171,7 +175,8 @@
             
             break;
     }
-    
+//    [self.sharedGlobal logHistory:atext];
+
     return atext;
 }
 

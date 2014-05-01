@@ -17,7 +17,7 @@
 - (instancetype) initWithCardCount:(NSUInteger)count
                          usingDeck:(gSetDeck *)deck;
 
-- (int) getCardsRemainingInDeck;
+//- (int) getCardsRemainingInDeck;
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (gSetCard *)cardAtIndex:(NSUInteger)index;
 - (NSInteger)calcScore;

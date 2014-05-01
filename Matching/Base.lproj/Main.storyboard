@@ -205,6 +205,20 @@
                                     <action selector="touchCardButton:" destination="f4p-5Z-jrx" eventType="touchUpInside" id="DqW-0b-rOu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ffu-Kt-EHK">
+                                <rect key="frame" x="175" y="425" width="125" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Label">
+                                        <attributes>
+                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -217,6 +231,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cardsLeftInDeckLabel" destination="eXp-nR-jO4" id="QFw-xN-JzN"/>
+                        <outlet property="historyLabel" destination="Ffu-Kt-EHK" id="lKi-6A-fwn"/>
                         <outletCollection property="SetCardButtons" destination="8ta-66-bm0" collectionClass="NSMutableArray" id="ZOR-kO-qRW"/>
                         <outletCollection property="SetCardButtons" destination="1r1-Q0-087" collectionClass="NSMutableArray" id="Wa5-vU-HY7"/>
                         <outletCollection property="SetCardButtons" destination="TAB-eC-0A9" collectionClass="NSMutableArray" id="fuL-5p-Tf5"/>

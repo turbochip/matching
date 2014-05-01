@@ -19,4 +19,6 @@
 @property (nonatomic) CGPoint cardLocation;
 
 -(int) match:(NSArray *)otherCards;
+- (NSMutableAttributedString *) buildMutableAttributedCardWithColor: (UIColor *) color fill: (int) fill shape: (NSString *) shape quantity: (int)quantity;
+
 @end

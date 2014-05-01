@@ -11,5 +11,6 @@
 @interface gSetViewController : UIViewController
 
 //- (void)logHistory: (NSMutableAttributedString *) historyMessage;
+@property (strong, nonatomic) IBOutlet UILabel *historyLabel;
 
 @end

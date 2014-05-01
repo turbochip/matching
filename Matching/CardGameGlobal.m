@@ -46,10 +46,35 @@ static inline double radians (double degrees)
 
 - (void)logHistory: (NSMutableAttributedString *) historyMessage
 {
-    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:historyMessage.mutableString];
+    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithAttributedString:historyMessage.mutableCopy];
     NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.mutableCopy];
     
     [tempstr appendAttributedString:temp1];
+   
+    
+    NSMutableAttributedString *res = [[NSMutableAttributedString alloc] initWithAttributedString:tempstr];
+    
+    [res beginEditing];
+    __block BOOL found = NO;
+    [res addAttribute:NSForegroundColorAttributeName value:UIColor.purpleColor range: NSMakeRange(0, res.length)];
+    [res enumerateAttributesInRange:NSMakeRange(0,res.length) options:NSAttributedStringEnumerationReverse usingBlock:^(id value, NSRange range, BOOL *stop) {
+//    [res enumerateAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0, res.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        if (value) {
+            UIFont *oldFont = (UIFont *)value;
+//            UIFont *newFont = [oldFont fontWithSize:oldFont.pointSize * 2];
+//            [res removeAttribute:NSFontAttributeName range:range];
+//            [res addAttribute:NSFontAttributeName value:newFont range:range];
+            NSLog(@"%@",[oldFont description]);
+            found = YES;
+        }
+    }];
+    if (!found) {
+        // No font was found - do something else?
+    }
+    [res endEditing];
+    
+    
+    
     self.quickHistoryText = tempstr;
     
 }
