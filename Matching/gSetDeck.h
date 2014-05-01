@@ -10,8 +10,8 @@
 #import "gSetPlayingCard.h"
 @interface gSetDeck : Deck
 
--(void)addCard:(gSetCard *)card atTop:(BOOL)atTop;
--(void)addCard:(gSetCard *)card;
+//-(void)addCard:(gSetCard *)card atTop:(BOOL)atTop;
+//-(void)addCard:(gSetCard *)card;
 
 -(gSetCard *)drawRandomCard;
 @property (strong,nonatomic) NSMutableArray *cards; //of PlayingCard

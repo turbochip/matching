@@ -22,7 +22,8 @@
 @end
 
 @implementation SetGame
-- (NSMutableArray *)cards  // is this the getter for cards??
+
+ - (NSMutableArray *)cards  // is this the getter for cards??
 {
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;

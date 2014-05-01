@@ -10,7 +10,6 @@
 #import "CardGameGlobal.h"
 @interface gSetCard ()
 
-@property (nonatomic,strong) NSMutableAttributedString * quickHistoryText;
 @end
 @implementation gSetCard
 

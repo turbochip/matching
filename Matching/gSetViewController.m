@@ -23,8 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
-//@property (nonatomic,strong) CardGameGlobal *CGG;
-//@property (strong, nonatomic) NSMutableAttributedString *quickHistoryText;
 @end
 
 @implementation gSetViewController
@@ -47,16 +45,6 @@
     [self updateUI];
 
 }
-
-/*
- - (NSMutableAttributedString *)quickHistoryText
-{
-    if(!_quickHistoryText){
-        _quickHistoryText=[[NSMutableAttributedString alloc] init];
-    }
-    return _quickHistoryText;
-}
-*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -89,16 +77,6 @@
     return self.mainDeck;
 }
 
-/*- (void)logHistory: (NSMutableAttributedString *) historyMessage
-{
-    NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:historyMessage.mutableString];
-    NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.mutableCopy];
-    
-    [tempstr appendAttributedString:temp1];
-    [CardGameGlobal .quickHistoryText = tempstr;
-  
-}
-*/
 - (IBAction)RestartButton:(id)sender {
     [self resetGame];
     [self updateUI];

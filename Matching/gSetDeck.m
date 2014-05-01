@@ -20,7 +20,7 @@
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
 }
-
+/*
 -(void)addCard:(gSetCard *)card atTop:(BOOL)atTop
 {
     if(atTop) {
@@ -35,7 +35,7 @@
 -(void)addCard:(gSetCard *)card {
     [self addCard:card atTop:NO];
 }
-
+*/
 -(gSetCard *)drawRandomCard
 {
     gSetCard *randomCard = nil;
