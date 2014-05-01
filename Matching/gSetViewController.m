@@ -23,8 +23,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
-@property (nonatomic,strong) CardGameGlobal *CGG;
-//@property (strong, nonatomic) NSMutableAttributedString *history;
+//@property (nonatomic,strong) CardGameGlobal *CGG;
+//@property (strong, nonatomic) NSMutableAttributedString *quickHistoryText;
 @end
 
 @implementation gSetViewController
@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    CardGameGlobal * CGG=[[CardGameGlobal alloc] init];
+//    CardGameGlobal * CGG=[[CardGameGlobal alloc] init];
     self.game=[[SetGame alloc] initWithCardCount:[self.SetCardButtons count] usingDeck:[self createDeck]];
     [self updateUI];
 
@@ -88,29 +88,31 @@
     
     return self.mainDeck;
 }
-/*
-- (void)logHistory: (NSMutableAttributedString *) historyMessage
+
+/*- (void)logHistory: (NSMutableAttributedString *) historyMessage
 {
     NSAttributedString * temp1 =[[NSAttributedString alloc] initWithString:historyMessage.mutableString];
     NSMutableAttributedString * tempstr=[[NSMutableAttributedString alloc] initWithAttributedString:self.quickHistoryText.mutableCopy];
     
     [tempstr appendAttributedString:temp1];
-    self.quickHistoryText = tempstr;
+    [CardGameGlobal .quickHistoryText = tempstr;
   
 }
 */
 - (IBAction)RestartButton:(id)sender {
     [self resetGame];
     [self updateUI];
-    [self.CGG logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting/n"]];
+    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
+    [sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting\n"]];
 }
 
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
     if([segue.identifier isEqualToString:@"HistorySegue"]){
         setHistoryViewController *vhistory = segue.destinationViewController;
-        vhistory.history =self.CGG.quickHistoryText.mutableCopy;
+        vhistory.history = sharedGlobal.quickHistoryText.mutableCopy;
     }
 }
 

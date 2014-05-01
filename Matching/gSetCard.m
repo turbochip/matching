@@ -11,16 +11,8 @@
 @interface gSetCard ()
 
 @property (nonatomic,strong) NSMutableAttributedString * quickHistoryText;
-@property (nonatomic,strong) CardGameGlobal * CGG;
 @end
 @implementation gSetCard
-
--(instancetype) init
-{
-    self=[super init];
-    self.CGG=[[CardGameGlobal alloc] init];
-    return self;
-}
 
 -(int) match:(NSArray *)otherCards
 {
@@ -29,8 +21,9 @@
     BOOL shapeOk=NO;
     BOOL fillOk=NO;
     BOOL qtyOk=NO;
-    
-    [self.CGG logHistory:[[NSMutableAttributedString alloc] initWithString:@"Comparing/n"]];
+    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
+
+    [sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Comparing\n"]];
     NSLog(@"Comparing ");
     for(int i=0;i<3;i++)
         NSLog(@"%@",[otherCards[i] contents] );
@@ -57,10 +50,15 @@
         (!([otherCards[0] cardQuantity] == [otherCards[2] cardQuantity])) &&
         (!([otherCards[1] cardQuantity] == [otherCards[2] cardQuantity]))) qtyOk=YES;
     
-    if(colorOk && shapeOk && fillOk && qtyOk) score=1;
+    if(colorOk && shapeOk && fillOk && qtyOk){
+        [sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Match\n"]];
+        score=1;
+    } else {
+        [sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"No Match\n"]];
+        score=0;
+    }
     
     return score;
 }
-
 
 @end

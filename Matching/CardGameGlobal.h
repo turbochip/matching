@@ -12,6 +12,7 @@
 
 @property (nonatomic,strong) NSMutableAttributedString * quickHistoryText;
 
++ (id) sharedGlobal;
 - (void)logHistory: (NSMutableAttributedString *) historyMessage;
 
 @end

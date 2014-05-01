@@ -13,7 +13,23 @@
 
 @implementation CardGameGlobal
 
++ (id)sharedGlobal {
+    static CardGameGlobal *sharedCardGameGlobal=nil;
+
+    @synchronized(self) {
+        if(sharedCardGameGlobal==nil)
+            sharedCardGameGlobal=[[self alloc] init];
+    }
+    return sharedCardGameGlobal;
+}
 #pragma mark - generic functions
+
+- (id)init {
+    if(self=[super init]) {
+        self.quickHistoryText=[[NSMutableAttributedString alloc] initWithString:@"Initializing History\n"];
+    }
+    return self;
+}
 
 static inline double radians (double degrees)
 {
@@ -37,4 +53,5 @@ static inline double radians (double degrees)
     self.quickHistoryText = tempstr;
     
 }
+
 @end
