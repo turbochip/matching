@@ -23,7 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (nonatomic,strong) gSetDeck *mainDeck;
-@property (nonatomic) CardGameGlobal *sharedGlobal;
+//@property (nonatomic) CardGameGlobal *sharedGlobal;
 @end
 
 @implementation gSetViewController
@@ -41,10 +41,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    CardGameGlobal * CGG=[[CardGameGlobal alloc] init];
     self.game=[[SetGame alloc] initWithCardCount:[self.SetCardButtons count] usingDeck:[self createDeck]];
     [self updateUI];
-//    CardGameGlobal *sharedGlobal=[CardGameGlobal sharedGlobal];
+ //   if(!self.sharedGlobal)
+//        CardGameGlobal *sharedGlobal=[CardGameGlobal sharedGlobal];
 
 }
 
@@ -83,7 +83,7 @@
     [self resetGame];
     [self updateUI];
 //    CardGameGlobal *sharedGlobal = [CardGameGlobal sharedGlobal];
-    [self.sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting\n"]];
+    [CardGameGlobal.sharedGlobal logHistory:[[NSMutableAttributedString alloc] initWithString:@"Restarting\n"]];
 }
 
 
@@ -111,6 +111,7 @@
 - (IBAction)touchCardButton:(id)sender {
     int chosenButtonIndex = [self.SetCardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
+    self.historyLabel.attributedText =[self attributedTitleForCard:[self.game cardAtIndex:chosenButtonIndex]];
     [self updateUI];
 }
 
@@ -132,7 +133,6 @@
         if(card.isChosen){
             cardButton.selected=YES;
             [cardButton setBackgroundImage:Nil forState:UIControlStateNormal];
-            self.historyLabel.attributedText =[self attributedTitleForCard: card];
             
         }
         else

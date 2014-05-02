@@ -92,7 +92,7 @@
             [attrDict setObject:[UIColor whiteColor] forKey:NSBackgroundColorAttributeName];
             break;
         case 3:
-            [attrDict setObject:[UIColor colorWithWhite:(CGFloat)0 alpha:(CGFloat) 5] forKey:NSBackgroundColorAttributeName];
+            [attrDict setObject:[UIColor colorWithWhite:(CGFloat).5 alpha:(CGFloat) .5] forKey:NSBackgroundColorAttributeName];
     }
     self.mas = [[NSMutableAttributedString alloc] initWithString:temp attributes:attrDict].mutableCopy;
     return self.mas;
